@@ -11,12 +11,66 @@
             font-family: 'TH Sarabun', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f3f4ed;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ffccbc, #ffe0b2, #c8e6c9);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background: radial-gradient(circle, #ff6f61, #ff8a65);
+            border-radius: 50%;
+            animation: floatUp 10s linear infinite;
+        }
+
+        .balloon:nth-child(2) {
+            background: radial-gradient(circle, #7986cb, #9fa8da);
+            width: 60px;
+            height: 80px;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+
+        .balloon:nth-child(3) {
+            background: radial-gradient(circle, #4caf50, #81c784);
+            width: 40px;
+            height: 60px;
+            animation-duration: 8s;
+            animation-delay: 4s;
+        }
+
+        .balloon:nth-child(4) {
+            background: radial-gradient(circle, #fdd835, #fff176);
+            width: 55px;
+            height: 75px;
+            animation-duration: 11s;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(30px) translateY(-50vh);
+            }
+            100% {
+                transform: translateX(-30px) translateY(-100vh);
+            }
         }
 
         .container {
@@ -26,23 +80,23 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none;
+            z-index: 10;
         }
-        .container.active {
-            display: block;
-        }
+
         .time {
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
             color: #d81b60;
         }
+
         label {
             font-size: 18px;
             display: block;
             margin-bottom: 10px;
             color: #6a1b9a;
         }
+
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -52,6 +106,7 @@
             border-radius: 5px;
             background-color: #f3e5f5;
         }
+
         button {
             width: 100%;
             padding: 10px;
@@ -61,42 +116,25 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .btn-submit {
             background-color: #f48fb1;
             color: white;
         }
+
         .btn-back {
             background-color: #b39ddb;
             color: white;
         }
+
         button:hover {
             opacity: 0.9;
         }
+
         .footer {
             font-size: 16px;
             margin-top: 10px;
             color: #6a1b9a;
-        }
-
-        .leaf {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');
-            background-size: cover;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0.5;
-            }
         }
     </style>
     <script>
@@ -122,45 +160,29 @@
                 return;
             }
 
-            document.getElementById('form-container').classList.remove('active');
-            document.getElementById('confirmation-container').classList.add('active');
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('confirmation-container').style.display = 'block';
             document.getElementById('employee-id-display').textContent = employeeCode;
         }
 
         function handleBack() {
-            document.getElementById('confirmation-container').classList.remove('active');
-            document.getElementById('form-container').classList.add('active');
-        }
-
-        function createFallingLeaves() {
-            const leafColors = ['#f48fb1', '#ffcc80', '#c8e6c9'];
-            const body = document.body;
-            for (let i = 0; i < 30; i++) {
-                const leaf = document.createElement('div');
-                leaf.classList.add('leaf');
-                const size = Math.random() * 20 + 10;
-                const left = Math.random() * 100;
-                const duration = Math.random() * 5 + 5;
-                const delay = Math.random() * 5;
-                leaf.style.width = `${size}px`;
-                leaf.style.height = `${size}px`;
-                leaf.style.left = `${left}%`;
-                leaf.style.animationDuration = `${duration}s`;
-                leaf.style.animationDelay = `${delay}s`;
-                leaf.style.backgroundColor = leafColors[Math.floor(Math.random() * leafColors.length)];
-                body.appendChild(leaf);
-            }
+            document.getElementById('confirmation-container').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             updateTime();
             setInterval(updateTime, 1000);
-            document.getElementById('form-container').classList.add('active');
-            createFallingLeaves();
         });
     </script>
 </head>
 <body>
+    <!-- Balloons Animation -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+
     <!-- หน้ากรอกข้อมูล -->
     <div class="container" id="form-container">
         <div class="time">08:15 AM</div>
@@ -172,7 +194,7 @@
     </div>
 
     <!-- หน้ายืนยัน -->
-    <div class="container" id="confirmation-container">
+    <div class="container" id="confirmation-container" style="display: none;">
         <div class="time">08:15 AM</div>
         <div>ยืนยันการลงเวลา</div>
         <div id="employee-id-display" style="font-weight: bold; margin-top: 10px; color: #6a1b9a;"></div>
@@ -181,5 +203,3 @@
     </div>
 </body>
 </html>
-
-
