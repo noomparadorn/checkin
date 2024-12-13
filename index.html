@@ -5,16 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบลงเวลาทำงาน</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=TH+Sarabun&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'TH Sarabun', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fce4ec;
+            background: linear-gradient(45deg, #ffccbc, #ffe0b2, #c8e6c9);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
             text-align: center;
             border: 1px solid #f8bbd0;
@@ -68,6 +79,11 @@
         button:hover {
             opacity: 0.9;
         }
+        .footer {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #6a1b9a;
+        }
     </style>
     <script>
         function updateTime() {
@@ -117,6 +133,7 @@
         <input type="text" id="employee-code" name="employee-code" placeholder="รหัสพนักงาน">
         <button class="btn-submit" onclick="handleSubmit()">ลงเวลา</button>
         <button class="btn-back" onclick="handleBack()">ย้อนกลับ</button>
+        <div class="footer">ผลงานของ ภราดร</div>
     </div>
 
     <!-- หน้ายืนยัน -->
@@ -125,6 +142,7 @@
         <div>ยืนยันการลงเวลา</div>
         <div id="employee-id-display" style="font-weight: bold; margin-top: 10px; color: #6a1b9a;"></div>
         <button class="btn-back" onclick="handleBack()">ย้อนกลับ</button>
+        <div class="footer">ผลงานของ ภราดร</div>
     </div>
 </body>
 </html>
