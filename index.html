@@ -11,19 +11,12 @@
             font-family: 'TH Sarabun', sans-serif;
             margin: 0;
             padding: 0;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(45deg, #ffccbc, #ffe0b2, #c8e6c9);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            background-color: #f3f4ed;
         }
 
         .container {
@@ -84,6 +77,27 @@
             margin-top: 10px;
             color: #6a1b9a;
         }
+
+        .leaf {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');
+            background-size: cover;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0.5;
+            }
+        }
     </style>
     <script>
         function updateTime() {
@@ -118,10 +132,31 @@
             document.getElementById('form-container').classList.add('active');
         }
 
+        function createFallingLeaves() {
+            const leafColors = ['#f48fb1', '#ffcc80', '#c8e6c9'];
+            const body = document.body;
+            for (let i = 0; i < 30; i++) {
+                const leaf = document.createElement('div');
+                leaf.classList.add('leaf');
+                const size = Math.random() * 20 + 10;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 5 + 5;
+                const delay = Math.random() * 5;
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size}px`;
+                leaf.style.left = `${left}%`;
+                leaf.style.animationDuration = `${duration}s`;
+                leaf.style.animationDelay = `${delay}s`;
+                leaf.style.backgroundColor = leafColors[Math.floor(Math.random() * leafColors.length)];
+                body.appendChild(leaf);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             updateTime();
             setInterval(updateTime, 1000);
             document.getElementById('form-container').classList.add('active');
+            createFallingLeaves();
         });
     </script>
 </head>
@@ -146,4 +181,5 @@
     </div>
 </body>
 </html>
+
 
